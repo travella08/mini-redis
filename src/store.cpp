@@ -1,6 +1,3 @@
-// YOU WRITE THIS FILE. Milestone 1.
-// Every function below is a stub that compiles but does nothing useful,
-// so the m1 tests fail until you implement them.
 #include "store.h"
 
 void Store::set(const std::string& key, const std::string& value) {

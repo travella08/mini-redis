@@ -1,12 +1,8 @@
-// Milestone 1 spec: Store, RESP encoders, and basic commands.
-// Run: ctest --test-dir build -R m1 --output-on-failure
 #include <gtest/gtest.h>
 
 #include "commands.h"
 #include "resp.h"
 #include "store.h"
-
-// ===== Store ===============================================================
 
 TEST(Store, GetMissingKeyIsEmpty) {
     Store s;
@@ -29,7 +25,6 @@ TEST(Store, SetOverwrites) {
 }
 
 TEST(Store, EmptyStringIsAValidValue) {
-    // This is why get() returns optional instead of "" for missing keys.
     Store s;
     s.set("k", "");
     ASSERT_TRUE(s.get("k").has_value());
@@ -52,8 +47,6 @@ TEST(Store, Exists) {
     EXPECT_TRUE(s.exists("k"));
 }
 
-// ===== RESP encoders =======================================================
-
 TEST(Encode, SimpleString) { EXPECT_EQ(resp::simple_string("OK"), "+OK\r\n"); }
 TEST(Encode, Error) { EXPECT_EQ(resp::error("ERR bad"), "-ERR bad\r\n"); }
 TEST(Encode, Integer) {
@@ -66,8 +59,6 @@ TEST(Encode, BulkString) {
     EXPECT_EQ(resp::bulk_string(""), "$0\r\n\r\n");
 }
 TEST(Encode, NullBulk) { EXPECT_EQ(resp::null_bulk(), "$-1\r\n"); }
-
-// ===== Commands ============================================================
 
 class Commands : public ::testing::Test {
 protected:

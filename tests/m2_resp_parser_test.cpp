@@ -1,5 +1,3 @@
-// Milestone 2 spec: the RESP parser.
-// Run: ctest --test-dir build -R m2 --output-on-failure
 #include <gtest/gtest.h>
 
 #include "resp.h"
@@ -20,7 +18,6 @@ TEST(Parse, FullArray) {
 }
 
 TEST(Parse, EveryPrefixOfACommandIsIncomplete) {
-    // TCP can split a message anywhere. Your parser must cope with all of them.
     const std::string buf = "*3\r\n$3\r\nSET\r\n$4\r\nname\r\n$5\r\ntanav\r\n";
     for (size_t len = 0; len < buf.size(); ++len) {
         EXPECT_EQ(resp::parse_command(buf.substr(0, len)).status, ParseStatus::Incomplete)
@@ -30,7 +27,6 @@ TEST(Parse, EveryPrefixOfACommandIsIncomplete) {
 }
 
 TEST(Parse, OnlyConsumesTheFirstCommand) {
-    // Pipelining: two commands arrive in one read().
     const std::string first = "*1\r\n$4\r\nPING\r\n";
     const std::string second = "*2\r\n$4\r\nECHO\r\n$2\r\nhi\r\n";
     auto r = resp::parse_command(first + second);
@@ -44,7 +40,6 @@ TEST(Parse, OnlyConsumesTheFirstCommand) {
 }
 
 TEST(Parse, BulkStringsAreBinarySafe) {
-    // The length prefix means values can contain \r\n themselves.
     auto r = resp::parse_command("*2\r\n$4\r\nECHO\r\n$4\r\na\r\nb\r\n");
     ASSERT_EQ(r.status, ParseStatus::Ok);
     EXPECT_EQ(r.args, (Args{"ECHO", "a\r\nb"}));
@@ -81,6 +76,5 @@ TEST(Parse, BadBulkLengthIsError) {
 }
 
 TEST(Parse, BulkNotTerminatedByCrlfIsError) {
-    // Says 4 bytes, but the 4 bytes are followed by junk instead of \r\n.
     EXPECT_EQ(resp::parse_command("*1\r\n$4\r\nPINGxx").status, ParseStatus::Error);
 }

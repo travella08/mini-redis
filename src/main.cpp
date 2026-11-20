@@ -1,11 +1,4 @@
-// main.cpp: for now, a local REPL so you can poke at your store and commands
-// before any networking exists. (Generated scaffolding.)
-//
-//   $ ./build/mini-redis
-//   mini-redis> set name tanav
-//   "+OK\r\n"
-//
-// In milestone 3 this file becomes the network server's entry point.
+// Local REPL for testing commands until the server exists.
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -16,7 +9,6 @@
 
 namespace {
 
-// Show \r and \n visibly so you can see the exact RESP bytes.
 std::string escape(const std::string& s) {
     std::string out;
     for (char c : s) {
@@ -33,7 +25,6 @@ int main() {
     Store store;
     std::string line;
 
-    std::cout << "mini-redis REPL (Ctrl+D to quit)\n";
     while (std::cout << "mini-redis> " << std::flush, std::getline(std::cin, line)) {
         std::istringstream words(line);
         std::vector<std::string> args;
