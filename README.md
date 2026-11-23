@@ -10,7 +10,7 @@ A Redis-compatible in-memory key-value store written in C++17. WIP (last update 
 ## Build
 
 ```bash
-git clone https://github.com/<your-username>/mini-redis.git
+git clone https://github.com/travella08/mini-redis.git
 cd mini-redis
 cmake -S . -B build
 cmake --build build
