@@ -1,30 +1,25 @@
 #include "store.h"
 
 void Store::set(const std::string& key, const std::string& value) {
-    // TODO
-    (void)key;
-    (void)value;
+    data_[key] = value;
 }
 
 std::optional<std::string> Store::get(const std::string& key) const {
-    // TODO
-    (void)key;
-    return std::nullopt;
+    auto it = data_.find(key);
+    if (it == data_.end()){
+        return std::nullopt;
+    }
+    return it->second;
 }
 
 bool Store::del(const std::string& key) {
-    // TODO
-    (void)key;
-    return false;
+    return data_.erase(key) == 1;
 }
 
 bool Store::exists(const std::string& key) const {
-    // TODO
-    (void)key;
-    return false;
+    return data_.count(key) == 1;
 }
 
 std::size_t Store::size() const {
-    // TODO
-    return 0;
+    return data_.size();
 }

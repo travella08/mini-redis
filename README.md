@@ -1,6 +1,6 @@
 # mini-redis
 
-A Redis-compatible in-memory key-value store written in C++17. WIP (last update 11/19/26)
+A Redis-compatible in-memory key-value store written in C++17. WIP (last update 11/23/26)
 
 ## Prerequisites
 
